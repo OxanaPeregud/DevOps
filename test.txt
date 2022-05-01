@@ -1,0 +1,1 @@
+Implement   the     following class. The solution will be evaluated based on your choice of     the data.

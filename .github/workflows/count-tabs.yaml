@@ -22,7 +22,7 @@ jobs:
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed" >> report.log 2>&1
-            echo "Counted tabs in files: `grep -P '\t' $file | wc -l`" >> report.log 2>&1 
+            echo "Counted tabs in files: `grep -o "   " $file | wc -l`" >> report.log 2>&1 
           done
       - name: Upload report
         uses: actions/upload-artifact@v2
