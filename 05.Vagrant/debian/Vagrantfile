@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "Debian" do |debian|
+    config.vm.box = "debian/bullseye64"
+    debian.vm.network "forwarded_port", guest: 80, host: 8082
+    debian.vm.network "private_network", ip: "192.168.2.1"
+    debian.vm.provider "virtualbox" do |vb|
+       vb.gui = false
+       vb.memory = "1024"
+    end
+    debian.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      apt-get install -y vim git wget curl nginx
+      systemctl enable nginx
+      systemctl start nginx
+      echo "<html><head><title>Debian</title></head><body><h3>Custom index for Debian with version: $(grep VERSION= /etc/os-release)</h3></body></html>" > /var/www/html/index.html
+    SHELL
+  end
+end
